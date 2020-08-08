@@ -9,6 +9,8 @@ public class ViewManager : BaseManager
     [SerializeField] private BasePanel _mainMenuPanel = null;
     [SerializeField] private BasePanel _gamePlayPanel = null;
     [SerializeField] private BasePanel _roomPanel = null;
+    [SerializeField] private BasePanel _roomListPanel = null;
+    [SerializeField] private BasePanel _createRoomPanel = null;
 
     [HideInInspector] public BasePanel CurrentActivePanel = null;
 
@@ -24,6 +26,15 @@ public class ViewManager : BaseManager
     public void TransitToMainMenu()
     {
         _mainMenuPanel.Activate();
+    }
+    public void TransitToRoomList()
+    {
+        _roomListPanel.Activate();
+    }
+
+    public void TransitToCreateRoom()
+    {
+        _createRoomPanel.Activate();
     }
 
     public void TransitToRoom()

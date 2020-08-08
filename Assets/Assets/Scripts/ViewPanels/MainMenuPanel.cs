@@ -5,18 +5,16 @@ using Photon.Pun;
 
 public class MainMenuPanel : BasePanel
 {
-
-   public void ExtPlay()
-   {
-       ServiceManager.ViewManager.TransitToGameplay();
-   }
-
     // Create a room
-    private void ExtCreateRoom(string roomName)
+    private void ExtCreateRoom()
     {
-        Debug.Log("created room " + roomName);
-        PhotonNetwork.CreateRoom(roomName);
-        ServiceManager.ViewManager.TransitToRoom();
+        ServiceManager.ViewManager.TransitToCreateRoom();
+    }
+
+    // Join a room
+    private void ExtJoinRoom()
+    {
+        ServiceManager.ViewManager.TransitToRoomList();
     }
 
 }
