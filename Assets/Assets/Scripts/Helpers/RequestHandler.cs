@@ -2,12 +2,15 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class RequestHandler : MonoBehaviour
+public class RequestHandler
 {
-    IEnumerator GetRequest(string uri)
+    public delegate void QuoteResponse(string response);
+
+    public static IEnumerator GetRequest(string uri,QuoteResponse callBack)    
     {
         UnityWebRequest unityWebRequest = UnityWebRequest.Get(uri);
         yield return unityWebRequest.SendWebRequest();
+        callBack(unityWebRequest.downloadHandler.text);
 
         if (unityWebRequest.isNetworkError)
         {
