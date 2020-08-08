@@ -6,13 +6,13 @@ using Photon.Pun;
 public class MainMenuPanel : BasePanel
 {
     // Create a room
-    private void ExtCreateRoom()
+    public void ExtCreateRoom()
     {
         ServiceManager.ViewManager.TransitToCreateRoom();
     }
 
     // Join a room
-    private void ExtJoinRoom()
+    public void ExtJoinRoom()
     {
         ServiceManager.ViewManager.TransitToRoomList();
     }

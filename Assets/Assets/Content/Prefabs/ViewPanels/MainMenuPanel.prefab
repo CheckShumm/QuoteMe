@@ -388,7 +388,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3611010794960157568}
         m_TargetAssemblyTypeName: MainMenuPanel, Assembly-CSharp
-        m_MethodName: ExtPlay
+        m_MethodName: ExtJoinRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
