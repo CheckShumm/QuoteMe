@@ -323,7 +323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8274097724602505011, guid: f9d7d236e65e9e34492f8a422c6b84e4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9d7d236e65e9e34492f8a422c6b84e4, type: 3}
@@ -341,6 +341,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf45ffc3f8718c14b8ab8b1b9f81b35c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &687755923 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3965126878848235174, guid: f3dbbe238940336469d02264573399d1, type: 3}
+  m_PrefabInstance: {fileID: 6403429000686558942}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1377282557 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4616934113562895851, guid: f3dbbe238940336469d02264573399d1, type: 3}
+  m_PrefabInstance: {fileID: 6403429000686558942}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1671711415
@@ -964,13 +986,29 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2684318805191721280, guid: f3dbbe238940336469d02264573399d1, type: 3}
+      propertyPath: _roomNameInput
+      value: 
+      objectReference: {fileID: 687755923}
+    - target: {fileID: 2684318805191721280, guid: f3dbbe238940336469d02264573399d1, type: 3}
+      propertyPath: _roomPasswordInput
+      value: 
+      objectReference: {fileID: 1377282557}
     - target: {fileID: 2943505179133886439, guid: f3dbbe238940336469d02264573399d1, type: 3}
       propertyPath: m_Name
       value: CreateRoomPanel
       objectReference: {fileID: 0}
     - target: {fileID: 2943505179133886439, guid: f3dbbe238940336469d02264573399d1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7057398595185783911, guid: f3dbbe238940336469d02264573399d1, type: 3}
+      propertyPath: m_text
+      value: "\u200B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7626014521918963074, guid: f3dbbe238940336469d02264573399d1, type: 3}
+      propertyPath: m_Name
+      value: RoomPasswordInput
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3dbbe238940336469d02264573399d1, type: 3}

@@ -4,11 +4,17 @@ public static class ServiceManager
 {
     public static AppManager AppManager { get {return _appManager.Value;} set { _appManager.Value = value; } }
     public static ViewManager ViewManager { get {return _viewManager.Value;} set { _viewManager.Value = value; } }
+    public static ChatManager ChatManager { get {return _chatManager.Value;} set { _chatManager.Value = value; } }
+    public static PlayerManager PlayerManager { get {return _playerManager.Value;} set { _playerManager.Value = value; } }
+    public static RoomManager RoomManager { get {return _roomManager.Value;} set { _roomManager.Value = value; } }
 
 
     // Singleton protection
     private static readonly WriteOnce<AppManager> _appManager = new WriteOnce<AppManager>();
     private static readonly WriteOnce<ViewManager> _viewManager = new WriteOnce<ViewManager>();
+    private static readonly WriteOnce<ChatManager> _chatManager = new WriteOnce<ChatManager>();
+    private static readonly WriteOnce<PlayerManager> _playerManager = new WriteOnce<PlayerManager>();
+    private static readonly WriteOnce<RoomManager> _roomManager = new WriteOnce<RoomManager>();
 }
 
 public sealed class WriteOnce<T> 

@@ -11,11 +11,11 @@ public class AppManager : BaseManager
 
     private void Start() 
     {
-        // The start of our game!
-
         // connect to photon
         Connect();
 
+        PlayerManager.Initialize();
+        DontDestroyOnLoad(new GameObject("ChatManager", typeof(ChatManager)));
     }
 
     // connects user to photon network
