@@ -8,21 +8,27 @@ public class ViewManager : BaseManager
 
     [SerializeField] private BasePanel _mainMenuPanel = null;
     [SerializeField] private BasePanel _gamePlayPanel = null;
+    [SerializeField] private BasePanel _roomPanel = null;
 
     [HideInInspector] public BasePanel CurrentActivePanel = null;
 
-    private void Start() 
+    private void Start()
     {
-        foreach(BasePanel panel in GetComponentsInChildren<BasePanel>()) 
+        foreach (BasePanel panel in GetComponentsInChildren<BasePanel>())
         {
             panel.Deactivate();
         }
         _mainMenuPanel.Activate();
     }
 
-    public void TransitToMainMenu() 
+    public void TransitToMainMenu()
     {
         _mainMenuPanel.Activate();
+    }
+
+    public void TransitToRoom()
+    {
+        _roomPanel.Activate();
     }
 
     public void TransitToGameplay()
