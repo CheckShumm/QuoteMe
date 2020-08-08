@@ -9,5 +9,7 @@ public class AppManager : BaseManager
     private void Start() 
     {
         // The start of our game!
+        PlayerManager.Initialize();
+        DontDestroyOnLoad(new GameObject("ChatManager", typeof(ChatManager)));
     }
 }
