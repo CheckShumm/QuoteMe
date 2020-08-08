@@ -21,8 +21,7 @@ public class BasePanel : MonoBehaviour
         }
     }
 
-    virtual protected void OnActive()
-    {
+    virtual protected void OnActive(){}
 
-    }
+    virtual protected void OnBack(){}
 }
