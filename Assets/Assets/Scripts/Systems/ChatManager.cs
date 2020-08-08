@@ -10,20 +10,34 @@ public class ChatManager : BaseManager
     private const string ChatAppVersion = "1.0.0";
     protected override void RegisterManager() { ServiceManager.ChatManager = this; }
     private ChatClient _chatClient;
-    private bool _isConnected = false;
+    private float _reconnectionTimer = 0.0f;
+    private AuthenticationValues _authValue;
 
     private void Start() 
     {
         _chatClient = new ChatClient(new ChatListener(this));
         _chatClient.ChatRegion = "US";
-        _chatClient.Connect(ChatAppId, ChatAppVersion, new AuthenticationValues(ServiceManager.PlayerManager.LocalPlayerProfile.Uid));
+        _authValue = new AuthenticationValues(ServiceManager.PlayerManager.LocalPlayerProfile.Uid);
+        _chatClient.Connect(ChatAppId, ChatAppVersion, _authValue);
     }
 
     private void Update() 
     {
-        if(_isConnected) 
-        {            
-            _chatClient.Service();
+        if(_chatClient != null) 
+        {
+            if(_chatClient.State == ChatState.Disconnected || _chatClient.State == ChatState.Uninitialized) 
+            {
+                _reconnectionTimer -= Time.deltaTime;
+                if(_reconnectionTimer <= 0) 
+                {
+                    _chatClient.ConnectAndSetStatus(ChatAppId, ChatAppVersion, _authValue);
+                    _reconnectionTimer = 5.0f;
+                }
+            }
+            else
+            {
+                _chatClient.Service();
+            }
         }
     }
 
@@ -89,14 +103,10 @@ public class ChatManager : BaseManager
         public void OnDisconnected() 
         {
             //Handle connection state
-            _chatManager._isConnected = false;
+            _chatManager._reconnectionTimer = 5.0f;
         }
         
-        public void OnConnected() 
-        {
-            //Handle connection state
-            _chatManager._isConnected = true;
-        }
+        public void OnConnected() {}
         
         public void OnChatStateChange(ChatState state) 
         {
