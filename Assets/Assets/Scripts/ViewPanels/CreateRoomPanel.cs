@@ -16,16 +16,18 @@ public class CreateRoomPanel : BasePanel
     {
        
         string roomName = _roomNameInput.text; 
+        string password = _roomPasswordInput.text;
 
         // TODO UI feedback ("Dont put spaces...")
         if (roomName.IsNullOrEmpty() || roomName.Contains(" "))
             return;
 
-        Room room = new Room(roomName);
-        
+        Room room = new Room(roomName, ServiceManager.PlayerManager.LocalPlayerProfile);
+        room.setPassword(password);
         Debug.Log("creating room " + roomName);
-        PhotonNetwork.CreateRoom(room.getID());
-        ServiceManager.ViewManager.TransitToRoom();
+        ServiceManager.RoomManager.AddRoom(room);
+        PhotonNetwork.CreateRoom(room.Uid);
+        ServiceManager.ViewManager.TransitToRoomList();
     }
 
     protected override void OnBack()

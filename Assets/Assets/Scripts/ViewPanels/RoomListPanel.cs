@@ -2,23 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System;
+using JetBrains.Annotations;
+using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class RoomListPanel : BasePanel
 {
-    public void extJoinRoom(uint index)
-    {
-        if (PhotonNetwork.IsConnected)
-        {
-            // join a room by name
-            PhotonNetwork.JoinRoom("");
-            ServiceManager.ViewManager.TransitToRoom();
-        }
-        else
-        {
-            // TODO try to reconnect to the room again
-            Debug.Log("User was not connected :(");
-            PhotonNetwork.ConnectUsingSettings();
+    [SerializeField] private RoomItem _roomItem = null;
+    [SerializeField] private ScrollRect _roomList = null;
+    private List<RoomItem> _roomItemList = new List<RoomItem>();
 
+    protected override void OnActive()
+    {
+        UpdateRooms();
+    }
+
+    public void UpdateRooms()
+    {   
+
+        List<Room> rooms = ServiceManager.RoomManager.GetRooms();
+        for (int i = 0; i < rooms.Count; i++) {
+            Room room = rooms[i];
+
+            if ( i < _roomItemList.Count)
+                _roomItemList[i].Initialize(room.getName(), room.getPlayerCount(), room.getHostName());
+            else 
+                Instantiate(_roomItem, _roomList.content).Initialize(room.getName(), room.getPlayerCount(), room.getHostName());
         }
     }
+
+    public void clearRooms()
+    {
+        foreach (RoomItem roomitem in _roomItemList){
+            // deactive items
+        }
+
+    }
+
 }
