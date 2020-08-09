@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ObjectWiggle : MonoBehaviour
 {
-    [SerializeField] private float _wiggleDelta;
-    [SerializeField] private float _wiggleTime;
+    [SerializeField] private float _wiggleDelta = 2.0f;
+    [SerializeField] private float _wiggleTime = 0.4f;
 
     private void Start() 
     {
