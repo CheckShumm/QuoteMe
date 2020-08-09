@@ -8,13 +8,13 @@ using UnityEngine.UI;
 public class GameplayPanel : BasePanel
 {
 
-    private const int _roundTime = 10;
-    private const int _totalRounds = 5;    
+    private const int _roundTime = 5;
+    private const int _totalRounds = 8;    
     
     private float _timeLeft = _roundTime;
     private int _currentRound = 0;
 
-    List<string> fakeQuotes = new List<string>(new string[] { "quote 1", "quote 2", "quote 3", "quote 4", "quote 5" });
+    List<string> fakeQuotes = new List<string>(new string[] { "kitkat 1", "kitkat 2", "quote 3", "quote 4", "quote 5", "quote 5", "quote 5", "quote 5", "quote 5" });
 
     private Color _lightRed = new Color(250,122,122,100);
     private Color _lightGreen = new Color(250, 122, 122, 100);
@@ -26,7 +26,8 @@ public class GameplayPanel : BasePanel
     [SerializeField] private Image timer = null;
 
     [SerializeField] private Image[] authorImages = new Image[4];
-    private AuthorImage[] _authorImageElements = new AuthorImage[4];
+    [SerializeField] private Image[] _overlays = new Image[4];
+    [SerializeField] private TextMeshProUGUI[] _authorNames = new TextMeshProUGUI[4];
 
     [SerializeField] private TextMeshProUGUI quote = null;
 
@@ -34,15 +35,31 @@ public class GameplayPanel : BasePanel
     {
         Debug.Log(index);
         if (index == _correctAnswer)
-            _authorImageElements[index].SetOverlayColor(_lightGreen);
+        {
+            Debug.Log("Correct!");
+            //_overlays[index].color = _lightGreen;
+        }
         else
-            _authorImageElements[index].SetOverlayColor(_lightRed);
+        {
+            Debug.Log("Wrong!");
+            //_overlays[index].color = _lightRed;
+        }
     }
-
     override protected void OnActivate()
     {
+
         quote.SetText(fakeQuotes[_currentRound]);
         _correctAnswer = UnityEngine.Random.Range(0, 3);
+        QuotesManager.GetQuoteByAuthor("Donald Trump", 1);
+        Dictionary<string, Sprite> authorSprites = ImageHandler.GetFourRandomAuthorPictures();
+        int index = 0;
+        foreach (var kvp in authorSprites)
+        {
+            authorImages[index].sprite = kvp.Value;
+            _authorNames[index].SetText(kvp.Key);
+            index++;
+        }
+
     }
 
     private void NextRound()
@@ -50,14 +67,24 @@ public class GameplayPanel : BasePanel
         _currentRound += 1;
         _timeLeft = _roundTime;
 
-        foreach (AuthorImage authorImageElement in _authorImageElements)
-            authorImageElement.SetOverlayColor(_white);
+        //foreach (Image overlay in _overlays)
+        //    overlay.color = _lightRed;
 
         quote.SetText(fakeQuotes[_currentRound]);
         _correctAnswer = UnityEngine.Random.Range(0, 3);
         if (_currentRound == _totalRounds)
         {
+            // TODO transit to post game lobby panel
             ServiceManager.ViewManager.TransitToRoom();
+        }
+
+        Dictionary<string, Sprite> authorSprites = ImageHandler.GetFourRandomAuthorPictures();
+        int index = 0;
+        foreach (var kvp in authorSprites)
+        {
+            authorImages[index].sprite = kvp.Value;
+            _authorNames[index].SetText(kvp.Key);
+            index++;
         }
 
     }

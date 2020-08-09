@@ -8,20 +8,23 @@ using UnityEngine;
  * 
  */
 [System.Serializable]
-public class QuotesManager
+public static class QuotesManager
 {
-    private int numberOfQuotesPerRequestPage;
-    private List <string> authorNames = new List <string>();
 
-    public IEnumerator GetQuoteByAuthor(string authorName, int numberOfQuotesPerRequest)
+    public static IEnumerator GetQuoteByAuthor(string authorName, int numberOfQuotesPerRequest)
     {
-        this.numberOfQuotesPerRequestPage = numberOfQuotesPerRequest;
-        string authorUri = "https://quote-garden.herokuapp.com/api/v2/authors/" + authorName + "?page=1&limit=" + numberOfQuotesPerRequestPage;
+    
+        string authorUri = "https://quote-garden.herokuapp.com/api/v2/authors/" + authorName + "?page=1&limit=" + numberOfQuotesPerRequest;
         return RequestHandler.GetRequest(authorUri, QuoteResponse);
     }
 
-    public void QuoteResponse(string response)
+    public static void QuoteResponse(string response)
     {
         Debug.Log("in app manager received " + response);
+        // parse response
+        QuotesResult quoteResult = JsonUtility.FromJson<QuotesResult>(response);
+
+        Debug.Log(quoteResult.quotes.Length);
+        Debug.Log(quoteResult.quotes[0].quoteText);
     }
 }

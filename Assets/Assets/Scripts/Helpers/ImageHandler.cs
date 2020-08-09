@@ -80,13 +80,14 @@ public static class ImageHandler
         return spriteList;
     }
 
-    public static List<Sprite> GetFourRandomAuthorPictures()
+    public static Dictionary<string, Sprite> GetFourRandomAuthorPictures()
     {
         randomizeArray(authors,authors.Length);
-        List<Sprite> spriteList = new List<Sprite>();
-        for(int i = 0; i <4; i++)
-            spriteList.Add(Resources.Load<Sprite>("AuthorData/authorsPhotos/" + authors[i]));
-        return spriteList;
+        Dictionary<string, Sprite> AuthorSpriteDictionary = new Dictionary<string, Sprite>();
+        for (int i = 0; i <4; i++)
+            AuthorSpriteDictionary[authors[i]] = Resources.Load<Sprite>("AuthorData/authorsPhotos/" + authors[i]);
+
+        return AuthorSpriteDictionary;
     }
 
     public static void randomizeArray(string[] arr, int n)
