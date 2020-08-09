@@ -2,15 +2,18 @@
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class RequestHandler
+public static class RequestHandler
 {
-    public delegate void QuoteResponse(string response);
+    public delegate void ResponseCallback(string response);
 
-    public static IEnumerator GetRequest(string uri,QuoteResponse callBack)    
+    public static IEnumerator GetRequest(string uri, ResponseCallback callBack)    
     {
+        Debug.Log("creating request");
+
         UnityWebRequest unityWebRequest = UnityWebRequest.Get(uri);
         yield return unityWebRequest.SendWebRequest();
-        
+        callBack(unityWebRequest.downloadHandler.text);
+
         if (unityWebRequest.isNetworkError)
         {
             Debug.Log("Error While Sending: " + unityWebRequest.error);
@@ -18,7 +21,6 @@ public class RequestHandler
         else
         {
             Debug.Log("Received: " + unityWebRequest.downloadHandler.text);
-            callBack(unityWebRequest.downloadHandler.text);
         }
     }
 }

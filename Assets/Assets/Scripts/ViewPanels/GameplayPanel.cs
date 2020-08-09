@@ -14,8 +14,6 @@ public class GameplayPanel : BasePanel
     private float _timeLeft = _roundTime;
     private int _currentRound = 0;
 
-    List<string> fakeQuotes = new List<string>(new string[] { "kitkat 1", "kitkat 2", "quote 3", "quote 4", "quote 5", "quote 5", "quote 5", "quote 5", "quote 5" });
-
     private Color _lightRed = new Color(250,122,122,100);
     private Color _lightGreen = new Color(250, 122, 122, 100);
     private Color _white = new Color(255, 255, 255, 255);
@@ -45,20 +43,46 @@ public class GameplayPanel : BasePanel
             //_overlays[index].color = _lightRed;
         }
     }
+
+    public void GetQuoteByAuthor(string authorName, int numberOfQuotesPerRequest)
+    {
+        string authorUri = "https://quote-garden.herokuapp.com/api/v2/authors/" + authorName + "?page=1&limit=" + numberOfQuotesPerRequest.ToString();
+        Debug.Log(authorUri);
+        StartCoroutine(RequestHandler.GetRequest(authorUri, QuoteResponse));
+    }
+
+    public void QuoteResponse(string response)
+    {
+        Debug.Log("in app manager received " + response);
+        // parse response
+        QuotesResult quoteResult = JsonUtility.FromJson<QuotesResult>(response);
+
+        Debug.Log(quoteResult.quotes.Length);
+        Debug.Log(quoteResult.quotes[0].quoteText);
+        quote.SetText(quoteResult.quotes[0].quoteText);
+    }
+
     override protected void OnActivate()
     {
 
-        quote.SetText(fakeQuotes[_currentRound]);
         _correctAnswer = UnityEngine.Random.Range(0, 3);
-        QuotesManager.GetQuoteByAuthor("Donald Trump", 1);
+       
         Dictionary<string, Sprite> authorSprites = ImageHandler.GetFourRandomAuthorPictures();
         int index = 0;
         foreach (var kvp in authorSprites)
         {
+            if (index == _correctAnswer)
+            {
+                GetQuoteByAuthor(kvp.Key, 1);
+            }
+
             authorImages[index].sprite = kvp.Value;
             _authorNames[index].SetText(kvp.Key);
             index++;
         }
+
+        // TODO use callback
+
 
     }
 
@@ -70,7 +94,6 @@ public class GameplayPanel : BasePanel
         //foreach (Image overlay in _overlays)
         //    overlay.color = _lightRed;
 
-        quote.SetText(fakeQuotes[_currentRound]);
         _correctAnswer = UnityEngine.Random.Range(0, 3);
         if (_currentRound == _totalRounds)
         {
@@ -82,6 +105,11 @@ public class GameplayPanel : BasePanel
         int index = 0;
         foreach (var kvp in authorSprites)
         {
+            if (index == _correctAnswer)
+            {
+                GetQuoteByAuthor(kvp.Key, 1);
+            }
+
             authorImages[index].sprite = kvp.Value;
             _authorNames[index].SetText(kvp.Key);
             index++;

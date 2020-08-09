@@ -7,18 +7,24 @@ using UnityEngine;
  * https://pprathameshmore.github.io/QuoteGarden/
  * 
  */
-[System.Serializable]
-public static class QuotesManager
-{
 
-    public static IEnumerator GetQuoteByAuthor(string authorName, int numberOfQuotesPerRequest)
+public class QuotesManager: MonoBehaviour
+{
+    public static QuotesManager instance;
+
+    public void Start()
     {
-    
-        string authorUri = "https://quote-garden.herokuapp.com/api/v2/authors/" + authorName + "?page=1&limit=" + numberOfQuotesPerRequest;
-        return RequestHandler.GetRequest(authorUri, QuoteResponse);
+        instance = gameObject.AddComponent<QuotesManager>();
     }
 
-    public static void QuoteResponse(string response)
+    public void GetQuoteByAuthor(string authorName, int numberOfQuotesPerRequest)
+    {
+        string authorUri = "https://quote-garden.herokuapp.com/api/v2/authors/" + authorName + "?page=1&limit=" + numberOfQuotesPerRequest.ToString();
+        Debug.Log(authorUri);
+        StartCoroutine(RequestHandler.GetRequest(authorUri, QuoteResponse));
+    }
+
+    public void QuoteResponse(string response)
     {
         Debug.Log("in app manager received " + response);
         // parse response
