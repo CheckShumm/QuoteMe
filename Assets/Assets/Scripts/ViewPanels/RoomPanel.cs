@@ -7,7 +7,7 @@ using Photon.Pun;
 
 public class RoomPanel : BasePanel
 {
-    override protected void OnActive()
+    override protected void OnActivate()
     {
         Debug.Log("Room Panel onActive!");
     }

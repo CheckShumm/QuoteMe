@@ -14,7 +14,7 @@ public class MainMenuPanel : BasePanel
     // Join a room
     public void ExtJoinRoom()
     {
-        ServiceManager.ViewManager.TransitToRoomList();
+        ServiceManager.ViewManager.TransitToGameplay();
     }
 
 }

@@ -13,7 +13,7 @@ public class RoomListPanel : BasePanel
     [SerializeField] private ScrollRect _roomList = null;
     private List<RoomItem> _roomItemList = new List<RoomItem>();
 
-    protected override void OnActive()
+    protected override void OnActivate()
     {
         UpdateRooms();
     }

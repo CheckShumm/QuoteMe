@@ -9,7 +9,7 @@ public class BasePanel : MonoBehaviour
         ServiceManager.ViewManager.CurrentActivePanel?.Deactivate();
         gameObject.SetActive(true);
         ServiceManager.ViewManager.CurrentActivePanel = this;
-        OnActive();
+        OnActivate();
     }
 
     public void Deactivate()
@@ -21,7 +21,7 @@ public class BasePanel : MonoBehaviour
         }
     }
 
-    virtual protected void OnActive(){}
+    virtual protected void OnActivate(){}
 
     virtual protected void OnBack(){}
 }
