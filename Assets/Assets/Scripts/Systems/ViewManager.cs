@@ -8,7 +8,7 @@ public class ViewManager : BaseManager
     protected override void RegisterManager() { ServiceManager.ViewManager = this; }
 
     public AudioSource SfxAudioSource => _sfxAudioSource;
-    [SerializeField] private AudioSource _sfxAudioSource;
+    [SerializeField] private AudioSource _sfxAudioSource = null;
 
     [SerializeField] private BasePanel _mainMenuPanel = null;
     [SerializeField] private BasePanel _gamePlayPanel = null;

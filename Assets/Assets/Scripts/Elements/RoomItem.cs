@@ -9,7 +9,7 @@ public class RoomItem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _roomName = null;
     [SerializeField] private TextMeshProUGUI _playerCount = null;
     [SerializeField] private TextMeshProUGUI _hostName = null;
-    [SerializeField] private Transform _border;
+    [SerializeField] private Transform _border = null;
 
     public void Initialize(string roomName, int playerCount, int maxPlayers, string hostName)
     {
