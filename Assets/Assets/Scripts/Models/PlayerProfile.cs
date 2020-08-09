@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerProfile
 {
-    public string PlayerName;
+    public string PlayerName = "BOB";
     public Color PlayerColor;
     public string Uid => _uid;
 
