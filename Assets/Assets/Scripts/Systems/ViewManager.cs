@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,8 +12,10 @@ public class ViewManager : BaseManager
     [SerializeField] private BasePanel _roomPanel = null;
     [SerializeField] private BasePanel _roomListPanel = null;
     [SerializeField] private BasePanel _createRoomPanel = null;
-
+   
     [HideInInspector] public BasePanel CurrentActivePanel = null;
+
+    private List<BasePanel> _historyPanels = new List<BasePanel>();
 
     private void Start()
     {
