@@ -8,15 +8,15 @@ using UnityEngine.UI;
 public class GameplayPanel : BasePanel
 {
 
-    private const int _roundTime = 5;
-    private const int _totalRounds = 8;    
+    private const int _roundTime = 20;
+    private const int _totalRounds = 30;    
     
     private float _timeLeft = _roundTime;
     private int _currentRound = 0;
 
-    private Color _lightRed = new Color(250,122,122,100);
-    private Color _lightGreen = new Color(250, 122, 122, 100);
-    private Color _white = new Color(255, 255, 255, 255);
+    private Color _lightRed = new Color32(250,122,122,100);
+    private Color _lightGreen = new Color32(42, 190, 52, 100);
+    private Color _white = new Color32(255, 255, 255, 50);
 
     private int _correctAnswer = 0;
 
@@ -35,12 +35,12 @@ public class GameplayPanel : BasePanel
         if (index == _correctAnswer)
         {
             Debug.Log("Correct!");
-            //_overlays[index].color = _lightGreen;
+            _overlays[index].GetComponent<Image>().color = _lightGreen;
         }
         else
         {
             Debug.Log("Wrong!");
-            //_overlays[index].color = _lightRed;
+            _overlays[index].GetComponent<Image>().color = _lightRed;
         }
     }
 
@@ -91,8 +91,8 @@ public class GameplayPanel : BasePanel
         _currentRound += 1;
         _timeLeft = _roundTime;
 
-        //foreach (Image overlay in _overlays)
-        //    overlay.color = _lightRed;
+        foreach (Image overlay in _overlays)
+            overlay.GetComponent<Image>().color = _white;
 
         _correctAnswer = UnityEngine.Random.Range(0, 3);
         if (_currentRound == _totalRounds)
