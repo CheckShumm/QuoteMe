@@ -1,13 +1,17 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
+    public static readonly string RoomNameKey = "RoomName";
+    public static readonly string PasswordKey = "Password";
+    public static readonly string HostNameKey = "HostName";
+
     private Dictionary<string, RoomInfo> _rooms = new Dictionary<string, RoomInfo>();
 
     public Action RoomListUpdated;
@@ -56,7 +60,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
         RoomListUpdated?.Invoke();
     }
 
-    public void JoinRoom(Room room, string password)
+    public void JoinRoom(Room room, string password = "")
     {
         // TODO validate password with a popup
         
@@ -76,8 +80,31 @@ public class RoomManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void CreateRoom(string roomName, string password="")
+    {
+        Debug.Log("creating room " + roomName);
+        Hashtable roomProperties = new Hashtable() {
+            {RoomNameKey, roomName},
+            {HostNameKey, ServiceManager.PlayerManager.LocalPlayerProfile.PlayerName},
+            {PasswordKey, password}
+        };
+        string[] lobbyProperties = {RoomNameKey, HostNameKey, PasswordKey};
+        PhotonNetwork.CreateRoom(System.Guid.NewGuid().ToString(), new Photon.Realtime.RoomOptions() { 
+            MaxPlayers = 8,
+            CustomRoomProperties = roomProperties,
+            CustomRoomPropertiesForLobby = lobbyProperties,
+        });
+        //ServiceManager.ViewManager.TransitToRoomList();
+    }
+
+    public override void OnJoinedLobby() 
+    {
+        Debug.Log("Photon Network: Joined Lobby");
+    }
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        Debug.Log($"Photon Network: Updated room list - {roomList.Count}");
         UpdateCachedRooms(roomList);
     }
 }

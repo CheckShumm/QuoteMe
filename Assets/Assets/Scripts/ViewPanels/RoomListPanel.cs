@@ -10,13 +10,13 @@ public class RoomListPanel : BasePanel
     [SerializeField] private ScrollRect _roomScroll = null;
     private List<RoomItem> _roomItemList = new List<RoomItem>();
 
+    public void ExtOnBack() 
+    {
+        ServiceManager.ViewManager.TransitToMainMenu();
+    }
+
     private void Start() 
     {
-        // Destroy any existing children in scroll rect
-        foreach(Transform child in _roomScroll.content.transform) 
-        {
-            Destroy(child.gameObject);
-        }
         ServiceManager.RoomManager.RoomListUpdated += UpdateRooms;
     }
 
@@ -34,17 +34,20 @@ public class RoomListPanel : BasePanel
     {
         ClearRooms();
         IEnumerable<RoomInfo> rooms = ServiceManager.RoomManager.GetRooms();
+        Debug.Log($"RoomListPanel: Updating room list");
         int i = 0;
         foreach(RoomInfo room in rooms) 
         {
+            string roomName = room.CustomProperties[RoomManager.RoomNameKey] as string;
+            string hostName = room.CustomProperties[RoomManager.HostNameKey] as string;
             if ( i < _roomItemList.Count)
             {
-                _roomItemList[i].Initialize(room.Name, room.PlayerCount, room.MaxPlayers, "TODO");
+                _roomItemList[i].Initialize(roomName, room.PlayerCount, room.MaxPlayers, hostName);
             }
             else 
             {
                 RoomItem roomItem = Instantiate(_roomItem, _roomScroll.content);
-                roomItem.Initialize(room.Name, room.PlayerCount, room.MaxPlayers, "TODO");
+                roomItem.Initialize(roomName, room.PlayerCount, room.MaxPlayers, hostName);
                 _roomItemList.Add(roomItem);
             }
             i++;
