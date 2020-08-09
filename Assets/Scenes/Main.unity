@@ -613,6 +613,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 8274097724602505011, guid: f9d7d236e65e9e34492f8a422c6b84e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9d7d236e65e9e34492f8a422c6b84e4, type: 3}
 --- !u!1001 &1671711415
@@ -1162,6 +1166,14 @@ PrefabInstance:
     - target: {fileID: 7219558313766006729, guid: 18c534ed44c24d2479a868002df23482, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7959500220431271649, guid: 18c534ed44c24d2479a868002df23482, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.00012207031
+      objectReference: {fileID: 0}
+    - target: {fileID: 7959500220431271649, guid: 18c534ed44c24d2479a868002df23482, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -330.66016
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18c534ed44c24d2479a868002df23482, type: 3}
