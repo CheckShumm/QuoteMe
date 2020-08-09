@@ -10,6 +10,6 @@ public class ObjectWiggle : MonoBehaviour
     private void Start() 
     {
         transform.Rotate(0, 0, -_wiggleDelta);
-        LeanTween.rotateZ(gameObject, transform.localEulerAngles.z + 2 * _wiggleDelta, _wiggleTime).setLoopPingPong();
+        LeanTween.rotateZ(gameObject, transform.localEulerAngles.z + 2 * _wiggleDelta, _wiggleTime).setLoopPingPong(); 
     }
 }
