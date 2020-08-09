@@ -19,7 +19,7 @@ public class RoomListPanel : BasePanel
         }
     }
 
-    protected override void OnActive()
+    protected override void OnActivate()
     {
         UpdateRooms();
     }
