@@ -4,25 +4,41 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class RoomManager
+public class RoomManager : MonoBehaviourPunCallbacks
 {
-    private List<Room> _rooms = null;
+    private Dictionary<string, RoomInfo> _rooms = new Dictionary<string, RoomInfo>();
 
     public static void Initialize()
     {
-        ServiceManager.RoomManager = new RoomManager();
-        ServiceManager.RoomManager._rooms = new List<Room>();
+        DontDestroyOnLoad(new GameObject("RoomManager", typeof(RoomManager)));
     }
 
-    public List<Room> GetRooms()
+    private void Start() 
     {
-        return _rooms;
+        ServiceManager.RoomManager = this;
+        PhotonNetwork.JoinLobby();
     }
 
-    public void AddRoom(Room room)
+    public IEnumerable<RoomInfo> GetRooms()
     {
-        _rooms.Add(room);
+        return _rooms.Values;
+    }
+
+    public void UpdateCachedRooms(List<RoomInfo> roomList)
+    {
+        foreach(RoomInfo info in roomList)
+        {
+            if (info.RemovedFromList)
+            {
+                _rooms.Remove(info.Name);
+            }
+            else
+            {
+                _rooms[info.Name] = info;
+            }
+        }
     }
 
     public void JoinRoom(Room room, string password)
@@ -45,5 +61,8 @@ public class RoomManager
         }
     }
 
-
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        UpdateCachedRooms(roomList);
+    }
 }
