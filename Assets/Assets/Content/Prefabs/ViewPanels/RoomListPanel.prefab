@@ -773,7 +773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _roomItem: {fileID: 274216683173066797, guid: 0e72dc44a7d3e3d468c22e376de6213e, type: 3}
-  _roomList: {fileID: 228566309869807276}
+  _roomScroll: {fileID: 228566309869807276}
 --- !u!1 &7570921479288763881
 GameObject:
   m_ObjectHideFlags: 0

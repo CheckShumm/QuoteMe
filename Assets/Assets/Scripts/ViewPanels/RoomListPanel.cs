@@ -13,9 +13,9 @@ public class RoomListPanel : BasePanel
     private void Start() 
     {
         // Destroy any existing children in scroll rect
-        foreach(GameObject child in _roomScroll.content.transform) 
+        foreach(Transform child in _roomScroll.content.transform) 
         {
-            Destroy(child);
+            Destroy(child.gameObject);
         }
     }
 
