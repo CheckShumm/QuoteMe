@@ -17,6 +17,12 @@ public class RoomListPanel : BasePanel
         {
             Destroy(child.gameObject);
         }
+        ServiceManager.RoomManager.RoomListUpdated += UpdateRooms;
+    }
+
+    private void Destroy() 
+    {
+        ServiceManager.RoomManager.RoomListUpdated -= UpdateRooms;
     }
 
     protected override void OnActivate()
@@ -31,7 +37,6 @@ public class RoomListPanel : BasePanel
         int i = 0;
         foreach(RoomInfo room in rooms) 
         {
-            i++;
             if ( i < _roomItemList.Count)
             {
                 _roomItemList[i].Initialize(room.Name, room.PlayerCount, room.MaxPlayers, "TODO");
@@ -42,15 +47,16 @@ public class RoomListPanel : BasePanel
                 roomItem.Initialize(room.Name, room.PlayerCount, room.MaxPlayers, "TODO");
                 _roomItemList.Add(roomItem);
             }
+            i++;
         }
     }
 
     private void ClearRooms()
     {
+        _roomItemList.RemoveAll(room => room == null);
         foreach (RoomItem roomitem in _roomItemList)
         {
             roomitem.gameObject.SetActive(false);
         }
     }
-
 }
