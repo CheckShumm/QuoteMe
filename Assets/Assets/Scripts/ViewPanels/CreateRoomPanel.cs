@@ -4,7 +4,6 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
-using WebSocketSharp;
 
 public class CreateRoomPanel : BasePanel
 {
@@ -19,14 +18,13 @@ public class CreateRoomPanel : BasePanel
         string password = _roomPasswordInput.text;
 
         // TODO UI feedback ("Dont put spaces...")
-        if (roomName.IsNullOrEmpty() || roomName.Contains(" "))
+        if (string.IsNullOrEmpty(roomName) || roomName.Contains(" "))
             return;
 
         Room room = new Room(roomName, ServiceManager.PlayerManager.LocalPlayerProfile);
         room.setPassword(password);
         Debug.Log("creating room " + roomName);
-        ServiceManager.RoomManager.AddRoom(room);
-        PhotonNetwork.CreateRoom(room.Uid);
+        PhotonNetwork.CreateRoom(room.Uid);//, new Photon.Realtime.RoomOptions() { MaxPlayers = 8 });
         ServiceManager.ViewManager.TransitToRoomList();
     }
 

@@ -1,43 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using System;
-using JetBrains.Annotations;
-using UnityEngine.UIElements;
 using UnityEngine.UI;
+using Photon.Realtime;
 
 public class RoomListPanel : BasePanel
 {
     [SerializeField] private RoomItem _roomItem = null;
-    [SerializeField] private ScrollRect _roomList = null;
+    [SerializeField] private ScrollRect _roomScroll = null;
     private List<RoomItem> _roomItemList = new List<RoomItem>();
 
-    protected override void OnActivate()
+    private void Start() 
+    {
+        // Destroy any existing children in scroll rect
+        foreach(GameObject child in _roomScroll.content.transform) 
+        {
+            Destroy(child);
+        }
+    }
+
+    protected override void OnActive()
     {
         UpdateRooms();
     }
 
     public void UpdateRooms()
-    {   
-
-        List<Room> rooms = ServiceManager.RoomManager.GetRooms();
-        for (int i = 0; i < rooms.Count; i++) {
-            Room room = rooms[i];
-
+    {
+        ClearRooms();
+        IEnumerable<RoomInfo> rooms = ServiceManager.RoomManager.GetRooms();
+        int i = 0;
+        foreach(RoomInfo room in rooms) 
+        {
+            i++;
             if ( i < _roomItemList.Count)
-                _roomItemList[i].Initialize(room.getName(), room.getPlayerCount(), room.getHostName());
+            {
+                _roomItemList[i].Initialize(room.Name, room.PlayerCount, room.MaxPlayers, "TODO");
+            }
             else 
-                Instantiate(_roomItem, _roomList.content).Initialize(room.getName(), room.getPlayerCount(), room.getHostName());
+            {
+                RoomItem roomItem = Instantiate(_roomItem, _roomScroll.content);
+                roomItem.Initialize(room.Name, room.PlayerCount, room.MaxPlayers, "TODO");
+                _roomItemList.Add(roomItem);
+            }
         }
     }
 
-    public void clearRooms()
+    private void ClearRooms()
     {
-        foreach (RoomItem roomitem in _roomItemList){
-            // deactive items
+        foreach (RoomItem roomitem in _roomItemList)
+        {
+            roomitem.gameObject.SetActive(false);
         }
-
     }
 
 }

@@ -6,12 +6,17 @@ using Photon.Chat;
 
 public class ChatManager : BaseManager
 {
+    protected override void RegisterManager() { ServiceManager.ChatManager = this; }
     private const string ChatAppId = "b9e31a47-c1d2-4f76-8ccb-f1ff76cb5791";
     private const string ChatAppVersion = "1.0.0";
-    protected override void RegisterManager() { ServiceManager.ChatManager = this; }
     private ChatClient _chatClient;
     private float _reconnectionTimer = 0.0f;
     private AuthenticationValues _authValue;
+
+    public static void Initialize() 
+    {
+        DontDestroyOnLoad(new GameObject("ChatManager", typeof(ChatManager)));
+    }
 
     private void Start() 
     {
