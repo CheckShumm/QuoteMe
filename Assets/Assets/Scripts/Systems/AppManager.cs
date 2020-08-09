@@ -15,6 +15,7 @@ public class AppManager : BaseManager
         Connect();
 
         PlayerManager.Initialize();
+        RoomManager.Initialize();
         DontDestroyOnLoad(new GameObject("ChatManager", typeof(ChatManager)));
     }
 
