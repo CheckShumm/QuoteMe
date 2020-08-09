@@ -321,10 +321,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 8274097724602505011, guid: f9d7d236e65e9e34492f8a422c6b84e4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9d7d236e65e9e34492f8a422c6b84e4, type: 3}
 --- !u!224 &239652494 stripped
@@ -1000,7 +996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2943505179133886439, guid: f3dbbe238940336469d02264573399d1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7057398595185783911, guid: f3dbbe238940336469d02264573399d1, type: 3}
       propertyPath: m_text
