@@ -60,16 +60,15 @@ public class RoomManager : MonoBehaviourPunCallbacks
         RoomListUpdated?.Invoke();
     }
 
-    public void JoinRoom(Room room, string password = "")
+    public void JoinRoom(string room, string password = "")
     {
         // TODO validate password with a popup
         
         if (PhotonNetwork.IsConnected)
         {
             // join a room by name
-            PhotonNetwork.JoinRoom("");
+            PhotonNetwork.JoinRoom(room);
             ServiceManager.ViewManager.TransitToRoom();
-            room.AddPlayer(ServiceManager.PlayerManager.LocalPlayerProfile);
         }
         else
         {
@@ -94,7 +93,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             CustomRoomProperties = roomProperties,
             CustomRoomPropertiesForLobby = lobbyProperties,
         });
-        //ServiceManager.ViewManager.TransitToRoomList();
+        ServiceManager.ViewManager.TransitToRoom();
     }
 
     public override void OnJoinedLobby() 

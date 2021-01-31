@@ -12,6 +12,7 @@ public class AppManager : BaseManager
     private void Start() 
     {
         PlayerManager.Initialize();
-        RoomManager.Initialize();        
+        RoomManager.Initialize(); 
+        ChatManager.Initialize();       
     }
 }

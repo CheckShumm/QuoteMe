@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Text;
 using UnityEngine;
 using ExitGames.Client.Photon;
 using Photon.Chat;
@@ -13,9 +13,24 @@ public class ChatManager : BaseManager
     private float _reconnectionTimer = 0.0f;
     private AuthenticationValues _authValue;
 
+    public delegate void OnChannelMessageReceivedDel(string channelName, string[] senders, object[] messages);
+    public OnChannelMessageReceivedDel OnChannelMessageReceived;
+
     public static void Initialize() 
     {
         DontDestroyOnLoad(new GameObject("ChatManager", typeof(ChatManager)));
+    }
+
+    public static T GetLatestMessage<T> (string senderUid, string[] senders, object[] messages) 
+    {
+        for(int i = messages.Length - 1; i >= 0; --i)
+        {
+            if(senders[i] == senderUid && messages[i] is T)
+            {
+                return (T)messages[i];
+            }
+        }
+        return default(T);
     }
 
     private void Start() 
@@ -24,6 +39,7 @@ public class ChatManager : BaseManager
         _chatClient.ChatRegion = "US";
         _authValue = new AuthenticationValues(ServiceManager.PlayerManager.LocalPlayerProfile.Uid);
         _chatClient.Connect(ChatAppId, ChatAppVersion, _authValue);
+        PhotonPeer.RegisterType(typeof(PlayerInfoMessage), PlayerInfoMessage.Id, PlayerInfoMessage.Serialize, PlayerInfoMessage.Deserialize);
     }
 
     private void Update() 
@@ -44,6 +60,40 @@ public class ChatManager : BaseManager
                 _chatClient.Service();
             }
         }
+    }
+
+    public class PlayerInfoMessage 
+    {
+        public static byte Id = 255;
+        public string PlayerName;
+        public static byte[] Serialize(object message)
+        {
+            PlayerInfoMessage playerInfoMessage = message as PlayerInfoMessage;
+            return Encoding.ASCII.GetBytes(playerInfoMessage.PlayerName);
+        }
+
+        public static PlayerInfoMessage Deserialize(byte[] data)
+        {
+            string playerName = Encoding.ASCII.GetString(data);
+            return new PlayerInfoMessage() { PlayerName = playerName };
+        }
+    }
+
+    public void Subscribe(string channelName) 
+    {
+        string[] channels = { channelName };
+        _chatClient.Subscribe(channels);
+    }
+
+    public void Unsubscribe(string channelName) 
+    {
+        string[] channels = { channelName };
+        _chatClient.Unsubscribe(channels);
+    }
+
+    public void SendChannelMessage(string channelName, object message)
+    {
+        _chatClient.PublishMessage(channelName, message);
     }
 
     private void OnDisconnected() 

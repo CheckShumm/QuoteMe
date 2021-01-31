@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class RoomItem : MonoBehaviour
 {
-
     [SerializeField] private TextMeshProUGUI _roomName = null;
     [SerializeField] private TextMeshProUGUI _playerCount = null;
     [SerializeField] private TextMeshProUGUI _hostName = null;
     [SerializeField] private Transform _border = null;
 
-    public void Initialize(string roomName, int playerCount, int maxPlayers, string hostName)
+    private string _roomId;
+
+    public void Initialize(string roomName, int playerCount, int maxPlayers, string hostName, string roomId)
     {
         gameObject.SetActive(true);
         _roomName.SetText(roomName);
@@ -33,5 +34,9 @@ public class RoomItem : MonoBehaviour
                 break;
         }
     }
-   
+
+   public void ExtJoinRoom()
+   {
+       ServiceManager.RoomManager.JoinRoom(_roomId);
+   }
 }

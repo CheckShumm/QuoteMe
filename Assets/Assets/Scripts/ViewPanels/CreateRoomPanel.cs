@@ -18,8 +18,8 @@ public class CreateRoomPanel : BasePanel
         ServiceManager.RoomManager.CreateRoom(roomName, password);
     }
 
-    protected override void OnBack()
+    public void ExtOnBack()
     {
-        ServiceManager.ViewManager.TransitToRoomList();
+        ServiceManager.ViewManager.TransitToMainMenu();
     }
 }

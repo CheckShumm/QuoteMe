@@ -42,12 +42,12 @@ public class RoomListPanel : BasePanel
             string hostName = room.CustomProperties[RoomManager.HostNameKey] as string;
             if ( i < _roomItemList.Count)
             {
-                _roomItemList[i].Initialize(roomName, room.PlayerCount, room.MaxPlayers, hostName);
+                _roomItemList[i].Initialize(roomName, room.PlayerCount, room.MaxPlayers, hostName, room.Name);
             }
             else 
             {
                 RoomItem roomItem = Instantiate(_roomItem, _roomScroll.content);
-                roomItem.Initialize(roomName, room.PlayerCount, room.MaxPlayers, hostName);
+                roomItem.Initialize(roomName, room.PlayerCount, room.MaxPlayers, hostName, room.Name);
                 _roomItemList.Add(roomItem);
             }
             i++;
